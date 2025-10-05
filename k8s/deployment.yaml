@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: instareach-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: instareach
+  template:
+    metadata:
+      labels:
+        app: instareach
+    spec:
+      containers:
+      - name: instareach
+        image: <dockerhub-username>/instareach:1.0   # replace with your image
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: / 
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
